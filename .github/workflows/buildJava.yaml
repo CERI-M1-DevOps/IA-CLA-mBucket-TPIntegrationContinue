@@ -23,4 +23,6 @@ jobs:
       - name: Build and analyse with Maven
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=$(echo ${{ github.repository }} | sed 's-/-_-')
+        run: |
+          PROJECT_KEY=$(echo "${{ github.repository }}" | sed 's-/-_-')
+          mvn -B -Dsonar.projectKey="$PROJECT_KEY" verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
